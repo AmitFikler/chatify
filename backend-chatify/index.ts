@@ -1,7 +1,14 @@
 import express from 'express';
+import { Server } from 'socket.io';
 const app = express();
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+
+const io = new Server<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>();
 
 io.on('connection', (socket) => {
   socket.on('message', ({ name, message }) => {
