@@ -7,10 +7,6 @@ export interface ClientToServerEvents {
   message: ({ name, message }: Message) => void;
 }
 
-interface InterServerEvents {
-  ping: () => void;
-}
-
 export interface Message {
   name: string;
   message: string;
@@ -18,4 +14,5 @@ export interface Message {
 
 export interface User {
   id: string;
+  user: string;
 }

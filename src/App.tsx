@@ -4,21 +4,29 @@ import { TextField } from '@material-ui/core';
 import { nanoid } from 'nanoid';
 
 import {
-  ClientToServerEvents,
   Message,
   ServerToClientEvents,
-} from './@types/types';
+  ClientToServerEvents,
+  User,
+} from '../backend-chatify/@types/typesSocketIo';
 
 function App() {
   // useStates
   const [message, setMessage] = useState<Message>({ message: '', name: '' }); // Message state
   const [chat, setChat] = useState<Message[]>([]); // chat "history"
+  const [usersOnline, setUsersOnline] = useState<User[]>([]); // users online array
 
   const socketRef =
     useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
 
   useEffect(() => {
-    socketRef.current = io('http://localhost:4000'); // connecting to 'http://localhost:4000'
+    socketRef.current = io('http://localhost:4000', {
+      auth: { user: 'user' + usersOnline.length },
+    }); // connecting to 'http://localhost:4000'
+    socketRef.current.on('onlineUser', (data) => {
+      console.log({ data: data });
+      setUsersOnline(data);
+    });
     socketRef.current.on('replayMessage', ({ name, message }) => {
       setChat((prevState) => {
         return [...prevState, { name, message }];
@@ -33,14 +41,13 @@ function App() {
     setMessage({ ...message, [e.target.name]: e.target.value });
   };
 
-  const onMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { name, message }: { name: string; message: string } = message;
-    if (socketRef.current) {
-      socketRef.current.emit('message', { name, message });
-      setMessage({ message: '', name });
-    }
-  };
+  // const onMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (socketRef.current) {
+  //     socketRef.current.emit('message', { name, message });
+  //     setMessage({ message: '', name });
+  //   }
+  // };
 
   const renderChat = () => {
     return chat.map(({ name, message }) => (
@@ -54,7 +61,7 @@ function App() {
 
   return (
     <div className="App">
-      <form style={{ padding: '15px' }} onSubmit={onMessageSubmit}>
+      <form style={{ padding: '15px' }}>
         <div>
           <TextField
             required
