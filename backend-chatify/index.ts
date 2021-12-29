@@ -20,7 +20,10 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
 io.on('connection', (socket) => {
   const username = socket.handshake.auth.user;
   const id = socket.id;
-  socket.broadcast.emit('replayMessage', { name: id, message: 'connected!' }); // send all users user connected
+  socket.broadcast.emit('replayMessage', {
+    name: username,
+    message: 'connected!',
+  }); // send all users user connected
   usersDb.push({ id, username }); // add user to database when connect
   io.emit('onlineUser', usersDb);
   socket.on('message', ({ name, message }) => {
@@ -31,7 +34,7 @@ io.on('connection', (socket) => {
     const userIndex = usersDb.indexOf({ id, username }); // delete the user that disconnected
     usersDb.splice(userIndex, 1);
     io.emit('onlineUser', usersDb);
-    io.emit('replayMessage', { name: id, message: 'disconnected' });
+    io.emit('replayMessage', { name: username, message: 'disconnected' });
   });
 });
 

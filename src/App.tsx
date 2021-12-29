@@ -22,10 +22,10 @@ function App() {
 
   useEffect(() => {
     socketRef.current = io('http://localhost:4000', {
+      // connecting to 'http://localhost:4000'
       auth: { user: 'user' + usersOnline.length },
-    }); // connecting to 'http://localhost:4000'
+    });
     socketRef.current.on('onlineUser', (data) => {
-      console.log({ data: data });
       setUsersOnline(data);
     });
     socketRef.current.on('replayMessage', ({ name, message }) => {
@@ -42,13 +42,13 @@ function App() {
     setMessage({ ...message, [e.target.name]: e.target.value });
   };
 
-  // const onMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (socketRef.current) {
-  //     socketRef.current.emit('message', { name, message });
-  //     setMessage({ message: '', name });
-  //   }
-  // };
+  const onMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (socketRef.current) {
+      socketRef.current.emit('message', message);
+      setMessage({ message: '', name: '' });
+    }
+  };
 
   const renderChat = () => {
     return chat.map(({ name, message }) => (
@@ -62,7 +62,7 @@ function App() {
 
   return (
     <div className="App">
-      <form style={{ padding: '15px' }}>
+      <form style={{ padding: '15px' }} onSubmit={onMessageSubmit}>
         <div>
           <TextField
             required
