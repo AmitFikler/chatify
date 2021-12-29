@@ -1,8 +1,9 @@
-interface ServerToClientEvents {
+export interface ServerToClientEvents {
   replayMessage: ({ name, message }: Message) => void;
+  onlineUser: (database: User[]) => void;
 }
 
-interface ClientToServerEvents {
+export interface ClientToServerEvents {
   message: ({ name, message }: Message) => void;
 }
 
@@ -10,12 +11,11 @@ interface InterServerEvents {
   ping: () => void;
 }
 
-interface Message {
+export interface Message {
   name: string;
   message: string;
 }
 
-interface SocketData {
-  name: string;
-  age: number;
+export interface User {
+  id: string;
 }
