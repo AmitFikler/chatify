@@ -1,5 +1,5 @@
 interface ServerToClientEvents {
-  messageBack: ({ name, message }: Message) => void;
+  replayMessage: ({ name, message }: Message) => void;
 }
 
 interface ClientToServerEvents {
