@@ -9,6 +9,7 @@ import {
   ClientToServerEvents,
   User,
 } from '../backend-chatify/@types/typesSocketIo';
+import UsersList from './components/UserList';
 
 function App() {
   // useStates
@@ -84,6 +85,7 @@ function App() {
         </div>
         <button>Send</button>
       </form>
+      <UsersList users={usersOnline} />
       <div className="chat-data">{renderChat()}</div>
     </div>
   );
