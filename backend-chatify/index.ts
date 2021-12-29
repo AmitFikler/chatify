@@ -1,6 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { usersDb } from './database/users';
 
 const app = express();
 const httpServer = createServer(app);
@@ -17,12 +18,15 @@ const io = new Server<
 });
 
 io.on('connection', (socket) => {
-  console.log('conncted');
+  const id = socket.id;
+  usersDb.push({ id }); // add user to database when connect
   socket.on('message', ({ name, message }) => {
     io.emit('replayMessage', { name, message });
   });
 
   socket.on('disconnect', () => {
+    const userIndex = usersDb.indexOf({ id }); // delete the user that disconnected
+    usersDb.splice(userIndex, 1);
     io.emit('replayMessage', { name: 'wow', message: 'render' });
   });
 });
