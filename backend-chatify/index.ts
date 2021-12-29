@@ -19,6 +19,7 @@ const io = new Server<
 
 io.on('connection', (socket) => {
   const id = socket.id;
+  socket.broadcast.emit('replayMessage', { name: id, message: 'connected!' }); // send all users user connected
   usersDb.push({ id }); // add user to database when connect
   socket.on('message', ({ name, message }) => {
     io.emit('replayMessage', { name, message });
@@ -27,7 +28,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     const userIndex = usersDb.indexOf({ id }); // delete the user that disconnected
     usersDb.splice(userIndex, 1);
-    io.emit('replayMessage', { name: 'wow', message: 'render' });
+    io.emit('replayMessage', { name: id, message: 'disconnected' });
   });
 });
 
