@@ -14,7 +14,7 @@ import {
 } from '../../backend-chatify/@types/typesSocketIo';
 
 function ChatPage() {
-  const message = useAppSelector((state) => state.chat.message);
+  const { message, username } = useAppSelector((state) => state.chat);
   const dispatch = useAppDispatch();
 
   const socketRef =
@@ -22,13 +22,13 @@ function ChatPage() {
 
   useEffect(() => {
     socketRef.current = io('http://localhost:4000', {
-      auth: { user: 'user' },
+      auth: { user: username },
     });
     socketRef.current.on('onlineUser', (data) => {
       dispatch(onlineUsers(data));
     });
     socketRef.current.on('replayMessage', ({ name, message }) => {
-      dispatch(addToChat({ name, message }));
+      dispatch(addToChat({ name: username, message }));
     });
   }, []);
 

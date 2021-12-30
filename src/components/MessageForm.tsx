@@ -15,19 +15,9 @@ function MessageForm({
         <TextField
           required
           id="outlined-required"
-          label="name"
-          onChange={(e) => onTextChange(e)}
-          defaultValue="name"
-          name="name"
-        />
-      </div>
-      <div>
-        <TextField
-          required
-          id="outlined-required"
           label="message"
           onChange={(e) => onTextChange(e)}
-          defaultValue="Hello World"
+          placeholder="type your message here..."
           name="message"
         />
       </div>
