@@ -12,6 +12,7 @@ import {
   ServerToClientEvents,
   ClientToServerEvents,
 } from '../backend-chatify/@types/typesSocketIo';
+import MessageForm from './components/MessageForm';
 
 function App() {
   const { message, chat } = useAppSelector((state) => state.chat);
@@ -57,29 +58,10 @@ function App() {
 
   return (
     <div className="App">
-      <form style={{ padding: '15px' }} onSubmit={onMessageSubmit}>
-        <div>
-          <TextField
-            required
-            id="outlined-required"
-            label="name"
-            onChange={(e) => onTextChange(e)}
-            defaultValue="name"
-            name="name"
-          />
-        </div>
-        <div>
-          <TextField
-            required
-            id="outlined-required"
-            label="message"
-            onChange={(e) => onTextChange(e)}
-            defaultValue="Hello World"
-            name="message"
-          />
-        </div>
-        <button>Send</button>
-      </form>
+      <MessageForm
+        onMessageSubmit={onMessageSubmit}
+        onTextChange={onTextChange}
+      />
       <UsersList />
       <div className="chat-data">{renderChat()}</div>
     </div>
