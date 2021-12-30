@@ -12,12 +12,21 @@ export const chatReducer = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    sendMessage: (state, action: PayloadAction<Message>): ChatState => {
+    sendMessage: (
+      state: ChatState,
+      action: PayloadAction<Message>
+    ): ChatState => {
       return { ...state, message: action.payload };
+    },
+    addToChat: (
+      state: ChatState,
+      action: PayloadAction<Message>
+    ): ChatState => {
+      return { ...state, chat: [...state.chat, action.payload] };
     },
   },
 });
 
-export const { sendMessage } = chatReducer.actions;
+export const { sendMessage, addToChat } = chatReducer.actions;
 
 export default chatReducer.reducer;
