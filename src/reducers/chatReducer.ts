@@ -43,6 +43,7 @@ export const chatReducer = createSlice({
   },
 });
 
-export const { sendMessage, addToChat, onlineUsers } = chatReducer.actions;
+export const { sendMessage, addToChat, onlineUsers, selectUser } =
+  chatReducer.actions;
 
 export default chatReducer.reducer;

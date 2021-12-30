@@ -1,53 +1,47 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { addToChat, onlineUsers, sendMessage } from './reducers/chatReducer';
+
+import UsersList from './components/UserList';
+
 import { io, Socket } from 'socket.io-client';
 import { TextField } from '@material-ui/core';
 import { nanoid } from 'nanoid';
 
 import {
-  Message,
   ServerToClientEvents,
   ClientToServerEvents,
-  User,
 } from '../backend-chatify/@types/typesSocketIo';
-import UsersList from './components/UserList';
 
 function App() {
-  const [message, setMessage] = useState<Message>({ message: '', name: '' }); // Message state
-  const [chat, setChat] = useState<Message[]>([]); // chat "history"
-  const [usersOnline, setUsersOnline] = useState<User[]>([]); // users online array
-  const [selectedUser, setSelectedUser] = useState<string>('');
+  const { message, chat } = useAppSelector((state) => state.chat);
+  const dispatch = useAppDispatch();
 
-  console.log(selectedUser);
   const socketRef =
     useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
 
   useEffect(() => {
     socketRef.current = io('http://localhost:4000', {
-      // connecting to 'http://localhost:4000'
-      auth: { user: 'user' + usersOnline.length },
+      auth: { user: 'user' },
     });
     socketRef.current.on('onlineUser', (data) => {
-      setUsersOnline(data);
+      dispatch(onlineUsers(data));
     });
     socketRef.current.on('replayMessage', ({ name, message }) => {
-      setChat((prevState) => {
-        return [...prevState, { name, message }];
-      });
+      dispatch(addToChat({ name, message }));
     });
-    // return () => socketRef.current.disconnect();
   }, []);
 
   const onTextChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setMessage({ ...message, [e.target.name]: e.target.value });
+    dispatch(sendMessage({ ...message, [e.target.name]: e.target.value }));
   };
 
   const onMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (socketRef.current) {
       socketRef.current.emit('message', message);
-      setMessage({ message: '', name: '' });
     }
   };
 
@@ -86,7 +80,7 @@ function App() {
         </div>
         <button>Send</button>
       </form>
-      <UsersList users={usersOnline} setSelectedUser={setSelectedUser} />
+      <UsersList />
       <div className="chat-data">{renderChat()}</div>
     </div>
   );
