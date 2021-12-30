@@ -3,10 +3,16 @@ import { selectUser } from '../reducers/chatReducer';
 
 function UsersList() {
   const dispatch = useAppDispatch();
-  const usersOnline = useAppSelector((state) => state.chat.usersOnline);
+  const { usersOnline, message } = useAppSelector((state) => state.chat);
 
   const handleClickUser = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    dispatch(selectUser((e.target as HTMLDivElement).id));
+    if (!message.to) {
+      dispatch(selectUser((e.target as HTMLDivElement).id));
+      (e.target as HTMLDivElement).style.color = 'blue';
+    } else {
+      dispatch(selectUser(''));
+      (e.target as HTMLDivElement).style.color = 'black';
+    }
   };
 
   return (

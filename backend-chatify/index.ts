@@ -26,8 +26,15 @@ io.on('connection', (socket) => {
   }); // send all users user connected
   usersDb.push({ id, username }); // add user to database when connect
   io.emit('onlineUser', usersDb);
-  socket.on('message', ({ name, message }) => {
-    io.emit('replayMessage', { name, message });
+  socket.on('message', ({ name, message, to }) => {
+    if (!to) {
+      io.emit('replayMessage', { name, message });
+    } else {
+      io.to([to, id]).emit('replayMessage', {
+        name,
+        message: '[private] ' + message,
+      });
+    }
   });
 
   socket.on('disconnect', () => {

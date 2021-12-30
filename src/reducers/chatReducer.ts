@@ -34,11 +34,9 @@ export const chatReducer = createSlice({
     ): ChatState => {
       return { ...state, usersOnline: action.payload };
     },
-    selectUser: (
-      state: ChatState,
-      action: PayloadAction<string>
-    ): ChatState => {
-      return { ...state, selectedUser: action.payload };
+    selectUser: (state: ChatState, action: PayloadAction<string>): void => {
+      state.message.to = action.payload;
+      state.selectedUser = action.payload;
     },
   },
 });
