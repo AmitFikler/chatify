@@ -3,19 +3,17 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { addToChat, onlineUsers, sendMessage } from './reducers/chatReducer';
 
 import UsersList from './components/UserList';
+import Chat from './components/Chat';
+import MessageForm from './components/MessageForm';
 
 import { io, Socket } from 'socket.io-client';
-import { TextField } from '@material-ui/core';
-import { nanoid } from 'nanoid';
-
 import {
   ServerToClientEvents,
   ClientToServerEvents,
 } from '../backend-chatify/@types/typesSocketIo';
-import MessageForm from './components/MessageForm';
 
 function App() {
-  const { message, chat } = useAppSelector((state) => state.chat);
+  const message = useAppSelector((state) => state.chat.message);
   const dispatch = useAppDispatch();
 
   const socketRef =
@@ -46,16 +44,6 @@ function App() {
     }
   };
 
-  const renderChat = () => {
-    return chat.map(({ name, message }) => (
-      <div key={nanoid()}>
-        <h3>
-          {name}: <span>{message}</span>
-        </h3>
-      </div>
-    ));
-  };
-
   return (
     <div className="App">
       <MessageForm
@@ -63,7 +51,7 @@ function App() {
         onTextChange={onTextChange}
       />
       <UsersList />
-      <div className="chat-data">{renderChat()}</div>
+      <Chat />
     </div>
   );
 }
