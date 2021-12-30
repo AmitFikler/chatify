@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ChatState, Message } from '../../backend-chatify/@types/typesSocketIo';
+import {
+  ChatState,
+  Message,
+  User,
+} from '../../backend-chatify/@types/typesSocketIo';
 
 const initialState: ChatState = {
   message: { name: '', message: '' },
@@ -24,9 +28,21 @@ export const chatReducer = createSlice({
     ): ChatState => {
       return { ...state, chat: [...state.chat, action.payload] };
     },
+    onlineUsers: (
+      state: ChatState,
+      action: PayloadAction<User[]>
+    ): ChatState => {
+      return { ...state, usersOnline: action.payload };
+    },
+    selectUser: (
+      state: ChatState,
+      action: PayloadAction<string>
+    ): ChatState => {
+      return { ...state, selectedUser: action.payload };
+    },
   },
 });
 
-export const { sendMessage, addToChat } = chatReducer.actions;
+export const { sendMessage, addToChat, onlineUsers } = chatReducer.actions;
 
 export default chatReducer.reducer;
