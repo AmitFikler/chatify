@@ -12,11 +12,12 @@ import {
 import UsersList from './components/UserList';
 
 function App() {
-  // useStates
   const [message, setMessage] = useState<Message>({ message: '', name: '' }); // Message state
   const [chat, setChat] = useState<Message[]>([]); // chat "history"
   const [usersOnline, setUsersOnline] = useState<User[]>([]); // users online array
+  const [selectedUser, setSelectedUser] = useState<string>('');
 
+  console.log(selectedUser);
   const socketRef =
     useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
 
@@ -85,7 +86,7 @@ function App() {
         </div>
         <button>Send</button>
       </form>
-      <UsersList users={usersOnline} />
+      <UsersList users={usersOnline} setSelectedUser={setSelectedUser} />
       <div className="chat-data">{renderChat()}</div>
     </div>
   );
