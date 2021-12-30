@@ -23,4 +23,5 @@ export interface ChatState {
   chat: Message[];
   usersOnline: User[];
   selectedUser: string;
+  username: string;
 }

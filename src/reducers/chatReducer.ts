@@ -10,6 +10,7 @@ const initialState: ChatState = {
   chat: [],
   usersOnline: [],
   selectedUser: '',
+  username: '',
 };
 
 export const chatReducer = createSlice({
@@ -38,10 +39,13 @@ export const chatReducer = createSlice({
       state.message.to = action.payload;
       state.selectedUser = action.payload;
     },
+    userLogin: (state: ChatState, action: PayloadAction<string>): void => {
+      state.username = action.payload;
+    },
   },
 });
 
-export const { sendMessage, addToChat, onlineUsers, selectUser } =
+export const { sendMessage, addToChat, onlineUsers, selectUser, userLogin } =
   chatReducer.actions;
 
 export default chatReducer.reducer;
