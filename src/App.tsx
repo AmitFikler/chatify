@@ -6,7 +6,9 @@ import LoginPage from './pages/LoginPage';
 function App() {
   return (
     <div className="App">
-      <Header />
+      <div className="header">
+        <Header />
+      </div>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/chat" element={<ChatPage />} />

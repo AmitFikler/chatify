@@ -1,20 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap');
+
+body {
+  font-family: 'Prompt', sans-serif;
+}
+
 .message-page {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  height: 90vh;
 }
 
 .input-message {
-  grid-area: 8 / 3 / 11 / 11;
+  grid-area: 9 / 3 / 11 / 11;
 }
 
 .users-list {
   grid-area: 1 / 1 / 11 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(111, 236, 111, 0.212);
+  border-radius: 20px;
 }
 
 .chat-data {
   grid-area: 1 / 3 / 9 / 11;
   overflow: auto;
+}
+
+.user {
+  display: flex;
+  place-content: space-around center;
+  flex-direction: row;
+  color: black;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.header {
+  margin-top: -8px;
 }
