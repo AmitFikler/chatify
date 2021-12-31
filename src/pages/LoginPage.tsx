@@ -24,7 +24,7 @@ function LoginPage() {
         <Box mt={20} textAlign={'center'}>
           <TextField
             id="outlined-basic"
-            label="Outlined"
+            label="Username"
             variant="outlined"
             onChange={(e) => setUsername(e.target.value)}
           />

@@ -1,10 +1,18 @@
 export interface ServerToClientEvents {
   replayMessage: ({ name, message }: Message) => void;
   onlineUser: (database: User[]) => void;
+  userTypingReplay: ({
+    name,
+    typing,
+  }: {
+    name: string;
+    typing: boolean;
+  }) => void;
 }
 
 export interface ClientToServerEvents {
   message: ({ name, message }: Message) => void;
+  userTyping: ({ name, typing }: { name: string; typing: boolean }) => void;
 }
 
 export interface Message {

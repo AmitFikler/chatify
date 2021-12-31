@@ -16,7 +16,7 @@ function UsersList() {
   };
 
   return (
-    <div>
+    <div className="users-list">
       <h1>users:</h1>
       {usersOnline.map((user) => {
         return (

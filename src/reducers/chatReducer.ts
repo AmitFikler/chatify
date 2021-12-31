@@ -41,6 +41,7 @@ export const chatReducer = createSlice({
     },
     userLogin: (state: ChatState, action: PayloadAction<string>): void => {
       state.username = action.payload;
+      state.message.name = action.payload;
     },
   },
 });

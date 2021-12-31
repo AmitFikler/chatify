@@ -6,7 +6,7 @@ import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 
 export default function Header() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} className="header">
       <AppBar position="static" style={{ backgroundColor: 'green' }}>
         <Toolbar>
           <IconButton

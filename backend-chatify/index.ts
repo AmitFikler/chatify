@@ -36,6 +36,9 @@ io.on('connection', (socket) => {
       });
     }
   });
+  socket.on('userTyping', ({ name, typing }) => {
+    socket.broadcast.emit('userTypingReplay', { name, typing });
+  });
 
   socket.on('disconnect', () => {
     const userIndex = usersDb.indexOf({ id, username }); // delete the user that disconnected

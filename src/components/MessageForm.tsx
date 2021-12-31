@@ -10,7 +10,11 @@ function MessageForm({
   ) => void;
 }) {
   return (
-    <form style={{ padding: '15px' }} onSubmit={onMessageSubmit}>
+    <form
+      style={{ padding: '15px' }}
+      onSubmit={onMessageSubmit}
+      className="input-message"
+    >
       <div>
         <TextField
           required
