@@ -1,6 +1,8 @@
-FROM node:14.18.0
+FROM node:14.18.0-alpine3.12
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY ["package.json", "package-lock.json*", "./backend/"]
+
+WORKDIR /backend
 
 RUN npm install 
 
