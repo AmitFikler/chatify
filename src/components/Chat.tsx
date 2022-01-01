@@ -24,7 +24,7 @@ function Chat({ typingUser }: { typingUser: string }) {
           style={
             name === username
               ? { backgroundColor: 'rgba(69, 245, 192, 0.637)', float: 'right' }
-              : { backgroundColor: 'rgba(26, 243, 91, 0.637)' }
+              : { backgroundColor: 'rgba(26, 243, 91, 0.637)', float: 'left' }
           }
         >
           {name}: <span>{message}</span>

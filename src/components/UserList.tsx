@@ -36,7 +36,9 @@ function UsersList() {
             >
               <Avatar {...stringAvatar(user.username)} />
             </StyledBadge>
-            {user.username}
+            <span style={{ marginLeft: '10px', fontSize: '20px' }}>
+              {user.username}
+            </span>
           </div>
         );
       })}

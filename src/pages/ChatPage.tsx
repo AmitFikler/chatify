@@ -15,6 +15,7 @@ import {
   ClientToServerEvents,
   ServerToClientEvents,
 } from '../../backend-chatify/@types/typesSocketIo';
+import { useNavigate } from 'react-router-dom';
 
 function ChatPage() {
   const { message, username } = useAppSelector((state) => state.chat);
@@ -23,8 +24,12 @@ function ChatPage() {
 
   const socketRef =
     useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!username) {
+      navigate('/');
+    }
     socketRef.current = io('http://localhost:4000', {
       auth: { user: username },
     });
