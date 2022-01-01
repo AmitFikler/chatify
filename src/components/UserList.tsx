@@ -8,12 +8,14 @@ function UsersList() {
   const { usersOnline, message } = useAppSelector((state) => state.chat);
 
   const handleClickUser = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!message.to) {
-      dispatch(selectUser((e.target as HTMLDivElement).id));
-      (e.target as HTMLDivElement).style.backgroundColor = 'blue';
-    } else {
-      dispatch(selectUser(''));
-      (e.target as HTMLDivElement).style.color = 'undifiend';
+    if ((e.target as HTMLDivElement).id) {
+      if (!message.to) {
+        dispatch(selectUser((e.target as HTMLDivElement).id));
+        (e.target as HTMLDivElement).style.backgroundColor = '#90ee90';
+      } else {
+        dispatch(selectUser(''));
+        (e.target as HTMLDivElement).style.backgroundColor = '';
+      }
     }
   };
   return (

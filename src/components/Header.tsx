@@ -17,7 +17,9 @@ export default function Header() {
             sx={{ mr: 2 }}
           >
             <ChatOutlinedIcon />
-            {'  '}Chatify
+            <a href="/" id="logo">
+              Chatify
+            </a>
           </IconButton>
         </Toolbar>
       </AppBar>

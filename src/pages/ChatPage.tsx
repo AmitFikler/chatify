@@ -7,6 +7,9 @@ import UsersList from '../components/UserList';
 import { addToChat, onlineUsers, sendMessage } from '../reducers/chatReducer';
 
 import { io, Socket } from 'socket.io-client';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 import {
   ClientToServerEvents,
@@ -50,7 +53,7 @@ function ChatPage() {
           name: username,
           typing: false,
         });
-      }, 2000);
+      }, 3000);
       dispatch(sendMessage({ name: username, message: e.target.value }));
     }
   };
@@ -58,8 +61,19 @@ function ChatPage() {
   const onMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (socketRef.current) {
-      console.log(message);
-      socketRef.current.emit('message', message);
+      if (username) {
+        socketRef.current.emit('message', message);
+      } else {
+        toast.error('You must be logged in to post a message', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     }
   };
 
@@ -70,8 +84,8 @@ function ChatPage() {
         onTextChange={onTextChange}
       />
       <UsersList />
-      <Chat />
-      <h5>{typingUser}</h5>
+      <Chat typingUser={typingUser} />
+      <ToastContainer />
     </div>
   );
 }

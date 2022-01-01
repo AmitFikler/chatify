@@ -1,4 +1,6 @@
 import { TextField } from '@material-ui/core';
+import { Button } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 
 function MessageForm({
   onMessageSubmit,
@@ -17,15 +19,24 @@ function MessageForm({
     >
       <div>
         <TextField
+          fullWidth
+          label="Message"
+          id="fullWidth"
           required
-          id="outlined-required"
-          label="message"
           onChange={(e) => onTextChange(e)}
           placeholder="type your message here..."
           name="message"
+          style={{ width: '92%' }}
         />
+        <Button
+          style={{ backgroundColor: '#50C878', marginTop: '10px' }}
+          variant="contained"
+          endIcon={<SendIcon />}
+          type="submit"
+        >
+          Send
+        </Button>
       </div>
-      <button>Send</button>
     </form>
   );
 }
