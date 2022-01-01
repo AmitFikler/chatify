@@ -1,8 +1,21 @@
 import { nanoid } from 'nanoid';
+import { useEffect, useRef } from 'react';
 import { useAppSelector } from '../app/hooks';
 
 function Chat({ typingUser }: { typingUser: string }) {
   const { chat, username } = useAppSelector((state) => state.chat);
+  const messageEl = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (messageEl.current !== null) {
+      messageEl.current.addEventListener('DOMNodeInserted', (event) => {
+        messageEl.current!.scroll({
+          top: messageEl.current!.scrollHeight,
+          behavior: 'smooth',
+        });
+      });
+    }
+  }, []);
+
   const renderChat = () => {
     return chat.map(({ name, message }) => (
       <div key={nanoid()}>
@@ -21,7 +34,7 @@ function Chat({ typingUser }: { typingUser: string }) {
   };
 
   return (
-    <div className="chat-data">
+    <div className="chat-data" ref={messageEl}>
       {renderChat()}
       <div className="typing">{typingUser}</div>
     </div>
